@@ -69,6 +69,59 @@ var crud = {
       });
     }
   },
+  postJob: async function (req, res) {
+    try {
+      const schema = Joi.object().keys({
+        contactName: Joi.string().required(),
+        phoneNumber: Joi.string().required(),
+        emailAddress: Joi.string().required(),
+        businessName: Joi.string().required(),
+        state: Joi.string().required(),
+        city: Joi.string().required(),
+        zipcode: Joi.string().required(),
+        experience: Joi.string().required(),
+        jobType: Joi.string().required(),
+        salary: Joi.number().required(),
+        salaryPer: Joi.string().required(),
+        comment: Joi.string().required(),
+
+      });
+      await universalFunctions.validateRequestPayload(req.body, res, schema);
+
+      let body = req.body;
+      let isExist = await userModel.findOne({
+        firebaseUID: body.firebaseUID,
+      });
+
+        var token = jwt.sign(
+          {
+            data: isExist._id,
+          },
+          "P16s2vsj6BRyFUKomxXG",
+          {
+            expiresIn: 15552000, // in seconds
+          }
+        );
+        isExist = JSON.parse(JSON.stringify(isExist));
+
+        delete isExist["modified_at"];
+        delete isExist["created_at"];
+        delete isExist["__v"];
+        isExist.token = token;
+
+        (isExist.newUserCreated = false),
+          res.status(200).send({
+            success: true,
+            data: isExist,
+          });
+    
+    } catch (error) {
+      res.status(400).send({
+        success: false,
+        message: error,
+      });
+    }
+  },
 };
 
 module.exports = crud;

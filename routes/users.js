@@ -6,5 +6,6 @@ var users = require("../controller/users.server.controllers");
 
 // admin pannel
 router.route("/loginSignup").post(users.loginSignup);
+router.route("/postJob").post(auth.hasAuthentcation(),users.postJob);
 
 module.exports = router;
