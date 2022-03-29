@@ -26,4 +26,8 @@ var JobSchema = new Schema({
 
 });
 
+JobSchema.index({ zipcode: "text" }) ;
+JobSchema.index({ state: "text" });
+JobSchema.index({ city: "text" });
+
 module.exports = mongoose.model("jobs", JobSchema);

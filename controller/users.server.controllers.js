@@ -111,6 +111,44 @@ var crud = {
       });
     }
   },
+  ownJob: async function (req, res) {
+    try {
+      let user = req.user;
+
+      let fetchJobs = await jobsModel.find({postedBy:user.id}).sort({created_at:-1});
+      fetchJobs = JSON.parse(JSON.stringify(fetchJobs));
+
+          res.status(200).send({
+            success: true,
+            data: fetchJobs,
+          });
+    
+    } catch (error) {
+      res.status(400).send({
+        success: false,
+        message: error,
+      });
+    }
+  },
+  searchJobs: async function (req, res) {
+    try {
+      let searchText = req.params.text;
+
+      let fetchJobs = await jobsModel.find({ $text: { $search: searchText }}).sort({created_at:-1});
+      fetchJobs = JSON.parse(JSON.stringify(fetchJobs));
+
+          res.status(200).send({
+            success: true,
+            data: fetchJobs,
+          });
+    
+    } catch (error) {
+      res.status(400).send({
+        success: false,
+        message: error,
+      });
+    }
+  },
 };
 
 module.exports = crud;
