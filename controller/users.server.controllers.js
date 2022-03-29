@@ -1,8 +1,11 @@
 let userModel = require("../models/user.model");
-
+let jwt= require("jsonwebtoken")
+let universalFunctions =require("../utils/universalFunctions");
+var Joi  =require("joi")
 var crud = {
   loginSignup: async function (req, res) {
     try {
+      console.log(req.body)
       const schema = Joi.object().keys({
         phoneNumber: Joi.string().trim().required(),
         firebaseUID: Joi.string().required(),
@@ -63,6 +66,7 @@ var crud = {
           });
       }
     } catch (error) {
+      console.log(error,"here is erroe ")
       res.status(400).send({
         success: false,
         message: error,
