@@ -24,6 +24,8 @@ var JobSchema = new Schema({
     salaryPer: {type: String,trim: true},
     comment: {type: String,trim: true},
 
+    industry: {type: String,trim: true},
+
 });
 
 JobSchema.index({ zipcode: "text" }) ;
