@@ -76,23 +76,6 @@ var crud = {
   },
   postJob: async function (req, res) {
     try {
-      // const schema = Joi.object().keys({
-      //   contactName: Joi.string().required(),
-      //   phoneNumber: Joi.string().required(),
-      //   emailAddress: Joi.string().required(),
-      //   businessName: Joi.string().required(),
-      //   state: Joi.string().required(),
-      //   city: Joi.string().required(),
-      //   zipcode: Joi.string().required(),
-      //   experience: Joi.string().required(),
-      //   jobType: Joi.string().required(),
-      //   salary: Joi.number().required(),
-      //   salaryPer: Joi.string().required(),
-      //   comment: Joi.string().required(),
-      //   industry: Joi.string().required(),
-      // });
-      // await universalFunctions.validateRequestPayload(req.body, res, schema);
-
       let body = req.body;
       let user = req.user;
       body.postedBy = user.id;
@@ -116,7 +99,7 @@ var crud = {
       let payload = { postedBy: user.id };
       let searchText = req.query.text;
       if (searchText) {
-        payload.jobType = { $regex: new RegExp(searchText, "i") };
+        payload.jobTitle = { $regex: new RegExp(searchText, "i") };
       }
       let fetchJobs = await jobsModel.find(payload).sort({ created_at: -1 });
       fetchJobs = JSON.parse(JSON.stringify(fetchJobs));

@@ -8,7 +8,7 @@ let mongoose = require("./db.server.connect"),
 var JobSchema = new Schema({
 
     postedBy:{type: Schema.ObjectId, ref: "user"},
-
+    jobTitle:{type: String,trim: true},
     contactName:{type: String,trim: true},
     phoneNumber:{type: String,trim: true},
     emailAddress:{type: String,trim: true},
