@@ -98,8 +98,29 @@ var crud = {
       let user = req.user;
       let payload = { postedBy: user.id };
       let searchText = req.query.text;
-      if (searchText) {
-        payload.jobTitle = { $regex: new RegExp(searchText, "i") };
+      let expressa={ $regex: new RegExp('^'+searchText, "i") }
+      // let datatosearch ={};
+      let daa= payload.jobTitle;
+      if(searchText ) {
+        // payload.jobTitle = { $regex: new RegExp(searchText, "i") };
+        // daa=payload.jobTitle
+        payload ={ $and : [
+          { 
+            $or : [ 
+                    {"jobTitle" :expressa},
+                    {"state" :expressa},
+                    {"contactName" :expressa},
+                    {"city" :expressa},
+                    {"zipcode" :expressa},
+                    {"jobType" :expressa},
+                    {"industry" :expressa},
+  
+                  ]
+          },
+          { 
+            "postedBy":user.id
+          }
+        ]}
       }
       let fetchJobs = await jobsModel.find(payload).sort({ created_at: -1 });
       fetchJobs = JSON.parse(JSON.stringify(fetchJobs));

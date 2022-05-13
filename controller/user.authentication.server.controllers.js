@@ -19,7 +19,7 @@ exports.hasAuthentcation = function (req, res, next) {
       // console.log("authnetication started");
       // console.log("in");
       if (token) {
-        console.log("token",token)
+        // console.log("token",token)
         let decoded = jwt_decode(token);
         if (decoded) {
           // try {
