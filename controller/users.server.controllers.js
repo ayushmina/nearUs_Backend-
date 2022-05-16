@@ -109,11 +109,10 @@ var crud = {
             $or : [ 
                     {"jobTitle" :expressa},
                     {"state" :expressa},
-                    {"contactName" :expressa},
                     {"city" :expressa},
                     {"zipcode" :expressa},
                     {"jobType" :expressa},
-                    {"industry" :expressa},
+                    {"businessName":expressa}
   
                   ]
           },
