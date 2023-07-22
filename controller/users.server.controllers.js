@@ -3,6 +3,8 @@ let jwt = require("jsonwebtoken");
 let universalFunctions = require("../utils/universalFunctions");
 var Joi = require("joi");
 const jobsModel = require("../models/jobs.model");
+const applyModel = require("../models/apply.model");
+
 var crud = {
   loginSignup: async function (req, res) {
     try {
@@ -85,6 +87,23 @@ var crud = {
       res.status(200).send({
         success: true,
         data: createJob,
+      });
+    } catch (error) {
+      res.status(400).send({
+        success: false,
+        message: error,
+      });
+    }
+  },
+  applyJob: async function (req, res) {
+    try {
+      let body = req.body;
+
+      let applyJob = await applyModel.create(body);
+      
+      res.status(200).send({
+        success: true,
+        data: applyJob,
       });
     } catch (error) {
       res.status(400).send({
